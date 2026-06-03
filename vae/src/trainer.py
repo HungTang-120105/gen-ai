@@ -1,6 +1,7 @@
 import torch
 import torch.nn as nn
 from tqdm.auto import tqdm
+import matplotlib.pyplot as plt
 
 
 import sys
@@ -81,9 +82,13 @@ class Trainer:
         
     def fit(self, num_epochs):
         best_val_loss = float("inf")
+        train_losses = []
+        val_losses = []
         for epoch in range(num_epochs):
             train_loss = self.train_epoch()
             val_loss = self.validate()
+            train_losses.append(train_loss)
+            val_losses.append(val_loss)
             if epoch % 20 == 0 or (epoch + 1) == config.EPOCHS:
                 print(
                     f"Epoch {epoch} | Train Loss: {train_loss:.4f} | Val Loss: {val_loss: .4f}"
@@ -98,3 +103,19 @@ class Trainer:
             
             if self.scheduler is not None:
                 self.scheduler.step()
+
+        self.save_training_progress_plot(train_losses, val_losses)
+
+    def save_training_progress_plot(self, train_losses, val_losses):
+        epochs = range(1, len(train_losses) + 1)
+        plt.figure(figsize=(8, 5))
+        plt.plot(epochs, train_losses, label="Train Loss")
+        plt.plot(epochs, val_losses, label="Val Loss")
+        plt.xlabel("Epoch")
+        plt.ylabel("Loss")
+        plt.title("Training Progress")
+        plt.legend()
+        plt.tight_layout()
+        output_path = Path(config.training_progress_dir) / "loss_curve.png"
+        plt.savefig(output_path, dpi=200, bbox_inches="tight")
+        plt.close()
