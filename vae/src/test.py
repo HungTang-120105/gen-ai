@@ -16,7 +16,7 @@ def build_test_loader():
 	transform = transforms.Compose(
 		[transforms.Pad(padding=2), transforms.ToTensor()]
 	)
-	testset = datasets.FashionMNIST(
+	testset = datasets.MNIST(
 		"data", train=False, download=True, transform=transform
 	)
 	return torch.utils.data.DataLoader(
