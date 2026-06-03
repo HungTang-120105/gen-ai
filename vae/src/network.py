@@ -81,4 +81,25 @@ class VAE(nn.Module):
         reconstruction = self.decoder(Z)
         
         return Z_mean, Z_log_var, reconstruction
+    
+    def sample(self, num_samples: int = 1, device: torch.device = None, z: torch.Tensor = None) -> torch.Tensor:
+        """Generate samples by decoding random latent vectors.
+
+        If `z` is provided use it (shape [N, latent_dim]); otherwise draw from N(0,1).
+        Returns decoded images tensor with shape [N, C, H, W].
+        """
+        if device is None:
+            device = next(self.parameters()).device
+
+        latent_dim = self.decoder.fc.in_features
+        if z is None:
+            z = torch.randn(num_samples, latent_dim, device=device)
+        else:
+            z = z.to(device)
+
+        self.eval()
+        with torch.no_grad():
+            imgs = self.decoder(z)
+
+        return imgs
         

@@ -17,15 +17,15 @@ from util import vae_loss
 transform = transforms.Compose(
     [transforms.Pad(padding=2), transforms.ToTensor()]
 )
-# load the FashionMNIST training data and create a dataloader
-trainset = datasets.FashionMNIST(
+# load the MNIST training data and create a dataloader
+trainset = datasets.MNIST(
     "data", train=True, download=True, transform=transform
 )
 train_loader = torch.utils.data.DataLoader(
     trainset, batch_size=config.BATCH_SIZE, shuffle=True
 )
-# load the FashionMNIST test data and create a dataloader
-testset = datasets.FashionMNIST(
+# load the MNIST test data and create a dataloader
+testset = datasets.MNIST(
     "data", train=False, download=True, transform=transform
 )
 test_loader = torch.utils.data.DataLoader(

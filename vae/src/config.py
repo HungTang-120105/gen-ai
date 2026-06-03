@@ -60,16 +60,5 @@ LINEARLY_SAMPLED_RECONSTRUCTIONS_PLOT = os.path.join(
 NORMALLY_SAMPLED_RECONSTRUCTIONS_PLOT = os.path.join(
     output_dir, "normally_sampled_reconstructions.png"
 )
-# define class labels dictionary
-CLASS_LABELS = {
-    0: "T-shirt/top",
-    1: "Trouser",
-    2: "Pullover",
-    3: "Dress",
-    4: "Coat",
-    5: "Sandal",
-    6: "Shirt",
-    7: "Sneaker",
-    8: "Bag",
-    9: "Ankle boot",
-}
+# define class labels dictionary for MNIST (digits 0-9)
+CLASS_LABELS = {i: str(i) for i in range(10)}

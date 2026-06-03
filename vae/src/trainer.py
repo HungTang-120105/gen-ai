@@ -21,6 +21,7 @@ class Trainer:
         scheduler = None,
         device = config.DEVICE,
         val_loader = None,
+        lambda_regular = 0.0,
     ):
         self.model = model
         self.optimizer = optimizer
@@ -29,6 +30,7 @@ class Trainer:
         self.scheduler = scheduler
         self.val_loader = val_loader
         self.device = device
+        self.lambda_regular = lambda_regular
     
     def train_epoch(self):
         self.model.train()
@@ -41,6 +43,12 @@ class Trainer:
             self.optimizer.zero_grad()
             pred = self.model(data)
             loss = self.criterion(pred, data)
+            # L2 regularization on model parameters
+            if self.lambda_regular and self.lambda_regular != 0.0:
+                l2_reg = torch.tensor(0.0, device=self.device)
+                for p in self.model.parameters():
+                    l2_reg = l2_reg + torch.sum(p.pow(2))
+                loss = loss + self.lambda_regular * l2_reg
             
             loss.backward()
             self.optimizer.step()
@@ -61,7 +69,13 @@ class Trainer:
                 data = data.to(config.DEVICE)
                 pred = self.model(data)
                 loss = self.criterion(pred, data)
-                
+                # Add L2 regularization to validation loss if enabled
+                if self.lambda_regular and self.lambda_regular != 0.0:
+                    l2_reg = torch.tensor(0.0, device=self.device)
+                    for p in self.model.parameters():
+                        l2_reg = l2_reg + torch.sum(p.pow(2))
+                    loss = loss + self.lambda_regular * l2_reg
+
                 running_loss += loss.item()
         return running_loss / len(self.val_loader)
         
