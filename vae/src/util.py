@@ -13,4 +13,4 @@ def vae_loss(y_pred, y_true):
     mu, logvar, reconstruction = y_pred
     recon_loss = reconstruction_loss(reconstruction, y_true)
     kld_loss = vae_gaussian_kl_loss(mu, logvar)
-    return 500 * recon_loss + kld_loss
+    return 100 * recon_loss + kld_loss
