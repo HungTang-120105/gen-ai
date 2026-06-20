@@ -177,7 +177,7 @@
         "Node name for S&R": "CLIPTextEncode"
       },
       "widgets_values": [
-        "lowres, blurry, deformed, extra limbs, watermark"
+        "lowres, blurry, out of focus, deformed face, distorted, disfigured, extra fingers, bad anatomy, asymmetric eyes, watermark, text, cropped, low quality"
       ]
     },
     {
@@ -266,10 +266,10 @@
       "widgets_values": [
         123,
         "fixed",
-        30,
-        7.5,
-        "dpmpp_2m",
-        "karras",
+        40,
+        7.0,
+        "ddim",
+        "ddim_uniform",
         1.0
       ]
     },
