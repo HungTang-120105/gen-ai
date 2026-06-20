@@ -1,0 +1,29 @@
+# ============================================================
+#  Phase 2 - requirements
+#  (DDPM/DDIM/CFG, Stable Diffusion + LoRA, Flow Matching, Flux/Qwen)
+# ============================================================
+# Nen dung GPU. Cai PyTorch khop CUDA cua may truoc, vd:
+#   pip install torch torchvision --index-url https://download.pytorch.org/whl/cu121
+# Roi: pip install -r requirements.txt
+
+# ---- Core DL ----
+torch>=2.2
+torchvision>=0.17
+numpy>=1.24
+tqdm>=4.66
+matplotlib>=3.7
+Pillow>=10.0
+
+# ---- Diffusion / Transformers stack ----
+# diffusers>=0.35 can cho Qwen-Image (QwenImagePipeline / QwenImageEditPipeline) va Flux
+diffusers>=0.35.0
+transformers>=4.46.0
+accelerate>=0.30.0
+safetensors>=0.4.2
+peft>=0.11.0           # LoRA (assignment 2.5)
+sentencepiece>=0.1.99  # tokenizer cho T5 (Flux) / Qwen
+timm>=0.9.16           # ModelEmaV3 (EMA) trong DDPM/CFG
+
+# ---- Tuy chon ----
+# torchao>=0.16.0      # mot so ban transformers moi yeu cau; chi can neu gap loi torchao
+# huggingface_hub>=0.23.0
