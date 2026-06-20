@@ -219,3 +219,5 @@ __marimo__/
 
 # Ignore dataset folder
 data/
+
+stable_diffusion/output/lora/checkpoint-3000
